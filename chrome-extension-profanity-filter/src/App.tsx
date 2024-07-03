@@ -1,41 +1,45 @@
-// import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+ import { useState } from 'react'
+import logo from './assets/familycensor2.png'
 import './App.css'
 
 function App() {
-  // const [count, setCount] = useState(0) 
-  const changeColorOnClick = async () => {
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id! },
-      func: () => {
-        document.body.style.backgroundColor = 'green';
-      }
-    });
-  }
-  
+  const [isEnabled, setIsEnabled] = useState(true);
+
+  const toggleExtension = async () => {
+    setIsEnabled(prevState => !prevState);
+  };
+
+  const openOptionsPage = () => {
+    chrome.runtime.openOptionsPage();
+  };
+
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+        <a href="" target="_blank">
+          <img src={logo} className="logo" alt="Family Friendly Censor logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1 className='title'>Family Friendly Censor</h1>
+      <div className="switch-container">
+        <label className="switch">
+          <input type="checkbox" checked={isEnabled} onChange={toggleExtension} />
+          <span className="slider round"></span>
+        </label>
+        <p>
+          {isEnabled ? 'Family Friendly Censor is ON' : 'Family Friendly Censor is OFF'}
+        </p>
+      </div>
       <div className="card">
-        <button onClick={() => changeColorOnClick()}>
-         Change Color
+        <button onClick={openOptionsPage}>
+          Options
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Blacklist websites and filter out words of your choice
         </p>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        Pay what you like - by Aristotelis Loucaides
       </p>
     </>
   )
