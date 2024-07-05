@@ -1,11 +1,11 @@
- import { useState } from 'react'
-import logo from './assets/familycensor2.png'
-import './App.css'
+import React, { useState } from 'react';
+import logo from './assets/familycensor2.png';
+import './App.css';
 
-function App() {
+const App: React.FC = () => {
   const [isEnabled, setIsEnabled] = useState(true);
 
-  const toggleExtension = async () => {
+  const toggleExtension = () => {
     setIsEnabled(prevState => !prevState);
   };
 
@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <div>
-        <a href="" target="_blank">
+        <a href="#" target="_blank">
           <img src={logo} className="logo" alt="Family Friendly Censor logo" />
         </a>
       </div>
@@ -42,6 +42,7 @@ function App() {
         Pay what you like - by Aristotelis Loucaides
       </p>
     </>
-  )
+  );
 }
-export default App
+
+export default App;

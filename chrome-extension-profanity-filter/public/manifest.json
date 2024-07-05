@@ -10,14 +10,29 @@
         }
     },
     "permissions": [
-        "storage",
-        "tabs",
-        "activeTab",
-        "scripting"
-      ],
+      "storage",
+      "tabs",
+      "activeTab",
+      "scripting"
+    ],
     "host_permissions": [
         "https://*/*",
         "http://*/*"
     ],
-    "options_page": "options.html"
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["contentScript.js"],
+          "run_at": "document_start",
+          "all_frames": true
+        }
+      ],
+    "options_page": "options.html",
+    "web_accessible_resources": [{
+      "resources": ["bad_words_list.txt"],
+      "matches": ["<all_urls>"]
+    }]
   }

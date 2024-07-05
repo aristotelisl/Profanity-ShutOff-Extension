@@ -3,6 +3,14 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #333;
+}
+
+body {
+  background-color: #333; 
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 .title {
@@ -103,4 +111,44 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/* Additional styles for the OptionsPage */
+nav {
+  background-color: #333;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  margin: 0 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #ddd;
+}
+
+.container {
+  background-color: white;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
