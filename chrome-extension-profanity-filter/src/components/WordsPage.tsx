@@ -5,11 +5,13 @@ const WordsPage: React.FC = () => {
   const [words, setWords] = useState<string[]>([]);
   const [newWord, setNewWord] = useState('');
   const [showUserWords, setShowUserWords] = useState(false); // State to toggle displaying user-added words
+  const [censorshipEnabled, setCensorshipEnabled] = useState(true); // State for censorship switch
 
   useEffect(() => {
-    // Fetch the list of censored words from chrome.storage.sync
-    chrome.storage.sync.get(['censoredWords'], (result) => {
+    // Fetch the list of censored words and censorship state from chrome.storage.sync
+    chrome.storage.sync.get(['censoredWords', 'censorshipEnabled'], (result) => {
       setWords(result.censoredWords || []);
+      setCensorshipEnabled(result.censorshipEnabled !== undefined ? result.censorshipEnabled : true);
     });
   }, []);
 
@@ -33,6 +35,14 @@ const WordsPage: React.FC = () => {
     setShowUserWords(prev => !prev); // Toggle showUserWords state
   };
 
+  const handleToggleCensorship = () => {
+    setCensorshipEnabled(!censorshipEnabled);
+    // Save the updated censorship state to chrome.storage.sync
+    chrome.storage.sync.set({ censorshipEnabled: !censorshipEnabled });
+    // Notify content script to apply or remove censorship based on the new state
+    chrome.runtime.sendMessage({ action: 'toggleCensorship', state: !censorshipEnabled });
+  };
+
   return (
     <div className="container">
       <h2>Censored Words</h2>
@@ -44,6 +54,16 @@ const WordsPage: React.FC = () => {
           placeholder="Add a new word"
         />
         <button onClick={handleAddWord}>Add</button>
+      </div>
+      <div className="censorship-switch">
+        <label>
+          Censorship Enabled
+          <input
+            type="checkbox"
+            checked={censorshipEnabled}
+            onChange={handleToggleCensorship}
+          />
+        </label>
       </div>
       <div className="user-words-card">
         <button onClick={toggleShowUserWords} className="show-user-words-btn">
