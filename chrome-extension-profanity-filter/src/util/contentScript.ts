@@ -28,8 +28,11 @@ function fetchAndCensorWords(): void {
     .then(response => response.text())
     .then(text => {
       const words = text.split('\n').map(word => word.trim().toLowerCase()).filter(Boolean);
-      const wordsSet = new Set(words);
-      censorWordsInDocument(wordsSet);
+      chrome.storage.sync.get(['censoredWords'], (result) => {
+        const userWords = result.censoredWords || [];
+        const wordsSet = new Set<string>([...words, ...userWords]);
+        censorWordsInDocument(wordsSet);
+      });
     })
     .catch(error => console.error('Failed to fetch bad words list:', error));
 }
