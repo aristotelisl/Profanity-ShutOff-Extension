@@ -13,7 +13,8 @@
       "storage",
       "tabs",
       "activeTab",
-      "scripting"
+      "scripting",
+      "declarativeNetRequest"
     ],
     "host_permissions": [
         "https://*/*",
@@ -32,7 +33,7 @@
       ],
     "options_page": "options.html",
     "web_accessible_resources": [{
-      "resources": ["bad_words_list.txt"],
+      "resources": ["bad_words_list.txt", "bad_websites_list.txt"],
       "matches": ["<all_urls>"]
     }]
   }
